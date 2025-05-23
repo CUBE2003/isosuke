@@ -2,7 +2,7 @@ from huggingface_hub import InferenceClient
 
 client = InferenceClient(
     model="deepseek-ai/DeepSeek-V3",
-    token="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",
+    token="hh",
     provider="novita"
 )
 
