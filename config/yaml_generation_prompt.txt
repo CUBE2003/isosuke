@@ -1,0 +1,128 @@
+Based on these file summaries:
+{summaries}
+Generate a YAML with the following structure:
+Description:
+  Name: ECommercePlatform
+  Type: Report
+  Version: '1.1'
+  Date: '2025-05-13'
+  Data Processed:
+    Type: Sensitive
+    Details: Customer data, payment information, order history, and application logs
+Elements:
+- id: Customer
+  Name: Customer  
+  Type: Person  
+- id: Admin
+  Name: Admin User  
+  Type: Person  
+- id: Webfrontend
+  Name: Bginx Web Server
+  Type: WebServer
+  Icon: nginx
+- id: APIServer
+  Name: API Gateway
+  Type: Server
+  Icon: api 
+- id: OrderDB
+  Name: Order Database
+  Type: Database  
+  Icon: database  
+- id: PaymentService
+  Name: Payment Processor
+  Type: ExternalService
+  Icon: payment 
+- id: Monitoring
+  Name: Prometheus Monitoring
+  Type: Monitoring
+  Icon: monitoring
+boundaries:
+  - id: PublicNetwork
+    category: PublicNetwork
+    description: This boundary represents the public-facing network where
+    elements:
+      - Customer
+  - id: DMZ
+    category: DMZBoundary
+    description: This boundary includes public-facing components like the
+    elements:
+      - WebFrontend
+      - APIServer
+  - id: InternalNetwork
+    category: PrivateNetwork
+    description: This boundary contains sensitive backend components like
+    elements:
+      - OrderDB
+      - Monitoring
+  - id: AdminNetwork
+    category: PrivateNetwork
+    description: This boundary is restricted to administrative access for management
+    elements:
+      - Admin
+  - id: ExternalServices
+    category: ThirdPartyBoundary
+    description: This boundary includes third-party services like payment
+    elements:
+      - PaymentService
+data_flows:
+  - from: Customer
+    to: WebFrontend
+    title: Browse Products
+    authentication_method: None
+    authorization: Read
+    protocol: HTTPS
+  - from: WebFrontend
+    to: APIServer
+    title: API Request
+    authentication_method: OAuth2
+    authorization: Read-Write
+    protocol: HTTPS
+  - from: APIServer
+    to: OrderDB
+    title: Order Query
+    authentication_method: ServiceAccount
+    authorization: Read-Write
+    protocol: TCP
+  - from: OrderDB
+    to: APIServer
+    title: Order Data
+    authentication_method: None
+    authorization: Read
+    protocol: TCP
+  - from: APIServer
+    to: PaymentService
+    title: Payment Request
+    authentication_method: API Key
+    authorization: Write
+    protocol: HTTPS
+  - from: PaymentService
+    to: APIServer
+    title: Payment Confirmation
+    authentication_method: API Key
+    authorization: Read
+    protocol: HTTPS
+  - from: APIServer
+    to: WebFrontend
+    title: Response Data
+    authentication_method: JWT
+    authorization: Read
+    protocol: HTTPS
+  - from: WebFrontend
+    to: Customer
+    title: Product Page
+    authentication_method: None
+    authorization: Read
+    protocol: HTTPS
+  - from: Admin
+    to: APIServer
+    title: Admin Operations
+    authentication_method: Okta
+    authorization: Read-Write
+    protocol: HTTPS
+  - from: APIServer
+    to: Monitoring
+    title: Metrics Data
+    authentication_method: ServiceToken
+    authorization: Write
+    protocol: HTTPS
+Infer all components and interactions accurately from the summaries, regardless of programming language. Ensure the YAML is complete, precise, and follows the example structure. Return only the YAML content.

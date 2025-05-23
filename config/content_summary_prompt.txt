@@ -1,0 +1,5 @@
+Given the contents of this file:
+{file_path}
+Content:
+{file_content}
+Summarize the sections relevant to network architecture (e.g., API endpoints, database connections, authentication methods, protocols like HTTPS, external services). Ignore irrelevant code (e.g., utility functions, tests). Provide a concise summary, e.g., "Defines X endpoints, connects to Y database, uses Z authentication." Aim for accurate identification of all network-related components and interactions.

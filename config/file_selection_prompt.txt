@@ -1,0 +1,7 @@
+List of files in the codebase:
+{file_list}
+
+Instructions:
+Analyze the list of file paths and select those relevant to the network architecture, such as files containing API endpoints, database connections, authentication logic, or configuration for network protocols (e.g., HTTP, WebSocket). Exclude files like documentation, tests, or unrelated assets (e.g., images, CSS).
+
+Return a list of selected file paths, one per line, with no additional text or explanations.
