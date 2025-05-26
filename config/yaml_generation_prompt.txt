@@ -1,6 +1,5 @@
-Based on these file summaries:
-{summaries}
-Generate a YAML with the following structure:
+Generate a YAML file describing the network architecture of a software application based on the provided file summaries. Derive the project name from the repository context (e.g., directory name, pom.xml, package.json). Set Type to an appropriate value (e.g., 'Web Application', 'API') based on the summaries. Include components (e.g., controllers, services, database), boundaries (e.g., presentation, data access), and data flows (e.g., HTTP, database protocols) as indicated by the summaries. Set Version to '1.0.0' and Date to '2025-05-26' if unknown. Avoid generic terms like 'Example System' or 'User Data'.
+Example format:
 Description:
   Name: ECommercePlatform
   Type: Report
@@ -125,4 +124,7 @@ data_flows:
     authentication_method: ServiceToken
     authorization: Write
     protocol: HTTPS
+    
+{summaries}
+
 Infer all components and interactions accurately from the summaries, regardless of programming language. Ensure the YAML is complete, precise, and follows the example structure. Return only the YAML content.

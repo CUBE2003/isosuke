@@ -1,6 +1,6 @@
-Your YAML has errors:
-{errors}
-Correct the following YAML to ensure proper syntax, complete fields, and consistent components, following this structure:
+Correct the following YAML to describe a software application based on the repository context. Fix any syntax errors: {errors}. Ensure Description.Name is a non-empty, specific project name derived from the repository, Type is appropriate (e.g., 'Web Application', 'API'), and components reflect the application structure. Avoid generic terms like 'Example System' or 'User Data'.
+
+Example format:
 Description:
   Name: ECommercePlatform
   Type: Report
@@ -125,6 +125,6 @@ data_flows:
     authentication_method: ServiceToken
     authorization: Write
     protocol: HTTPS
-Corrected YAML:
+
+Return only the corrected YAML:
 {yaml_content}
-Return only the corrected YAML.
