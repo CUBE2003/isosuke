@@ -1,3 +1,5 @@
+
+
 import argparse
 import logging
 import os
@@ -7,7 +9,7 @@ from src.file_selector import select_relevant_files
 from src.content_processor import process_file_contents
 from src.yaml_generator import generate_yaml
 from src.yaml_validator import validate_and_save_yaml
-from huggingface_hub import InferenceClient
+from openai import OpenAI
 
 def setup_logging():
     """Set up logging to file and console."""
@@ -26,7 +28,7 @@ def main():
     setup_logging()
     parser = argparse.ArgumentParser(description="Generate network architecture YAML from codebase")
     parser.add_argument("codebase_path", help="Path to the codebase directory")
-    parser.add_argument("--api-key", required=True, help="Hugging Face or Novita API key")
+    parser.add_argument("--api-key", required=True, help="OpenRouter API key")
     args = parser.parse_args()
 
     codebase_path = Path(args.codebase_path)
@@ -34,13 +36,12 @@ def main():
         logging.error(f"Invalid codebase path: {codebase_path}")
         raise ValueError(f"Invalid codebase path: {codebase_path}")
 
-    # Initialize InferenceClient with Novita provider
-    client = InferenceClient(
-        model="deepseek-ai/DeepSeek-V3",
-        token=args.api_key,
-        provider="novita"
+    # Initialize OpenAI client with OpenRouter API
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=args.api_key,
     )
-    logging.info("Initialized InferenceClient with model: deepseek-ai/DeepSeek-V3, provider: novita")
+    logging.info("Initialized OpenAI client with OpenRouter API, model: deepseek/deepseek-chat-v3-0324:free")
 
     try:
         # Step 1: Generate file structure

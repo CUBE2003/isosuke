@@ -27,7 +27,7 @@ def select_relevant_files(client, file_paths: List[str], codebase_path: Path) ->
     Select relevant files from the codebase using the model.
 
     Args:
-        client: Hugging Face InferenceClient instance.
+        client: OpenAI client instance (configured for OpenRouter API).
         file_paths (List[str]): List of file paths in the codebase.
         codebase_path (Path): Root path of the codebase.
 
@@ -49,14 +49,19 @@ def select_relevant_files(client, file_paths: List[str], codebase_path: Path) ->
         raise ValueError(f"Prompt formatting failed: missing placeholder {e}")
 
     # Log client configuration for debugging
-    logging.info(f"Using InferenceClient with model: {client.model}, provider: novita")
+    logging.info("Using OpenAI client with OpenRouter API, model: deepseek/deepseek-chat-v3-0324:free")
 
     # Send to model for file selection using conversational task
     try:
         logging.info("Selecting relevant files with model")
-        response = client.chat_completion(
+        response = client.chat.completions.create(
+            model="deepseek/deepseek-chat-v3-0324:free",
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=2000
+            max_tokens=2000,
+            extra_headers={
+                "HTTP-Referer": "your-site-url",  # Optional: replace with your site URL
+                "X-Title": "your-site-name"       # Optional: replace with your site name
+            }
         )
         response_text = response.choices[0].message.content
         if not response_text.strip():
